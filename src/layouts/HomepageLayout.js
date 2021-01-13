@@ -5,7 +5,7 @@ import Header from "../components/Header";
 function HomepageLayout(props) {
   return (
     <div>
-      <Header />
+      <Header {...props} />
 
       {props.children}
 

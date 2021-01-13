@@ -1,9 +1,11 @@
+import { auth } from "firebase/utils";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import "./Header.scss";
 
 function Header(props) {
+  const { currentUser } = props;
   return (
     <header className="header">
       <Container>
@@ -11,7 +13,7 @@ function Header(props) {
           <Col xs="auto">
             <a
               className="header__link header__title"
-              href=""
+              href="http://localhost:3000/"
               rel="noopener noreferrer"
             >
               Shopping App
@@ -19,14 +21,39 @@ function Header(props) {
           </Col>
 
           <Col xs="auto">
-            <NavLink
-              exact
-              className="header__link"
-              to="/sign-in"
-              activeClassName="header__link--active"
-            >
-              Sign In
-            </NavLink>
+            {currentUser ? (
+              <div>
+                <div>Hello, {currentUser.displayName} | </div>
+                <NavLink
+                  exact
+                  className="header__link"
+                  to="/"
+                  activeClassName="header__link--active"
+                  onClick={() => auth.signOut()}
+                >
+                  Logout
+                </NavLink>
+              </div>
+            ) : (
+              <div>
+                <NavLink
+                  exact
+                  className="header__link"
+                  to="/registration"
+                  activeClassName="header__link--active"
+                >
+                  Register
+                </NavLink>
+                <NavLink
+                  exact
+                  className="header__link"
+                  to="/login"
+                  activeClassName="header__link--active"
+                >
+                  Login
+                </NavLink>
+              </div>
+            )}
           </Col>
         </Row>
       </Container>
